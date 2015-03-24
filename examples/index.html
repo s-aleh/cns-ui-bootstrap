@@ -6,12 +6,102 @@
     <style type="text/css">
         [ng-cloak], .ng-cloak { display: none; }
     </style>
+    <link rel="stylesheet" href="../src/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../src/vendor/prettify/prettify.css">
+    <script type="text/javascript" src="../src/vendor/prettify/prettify.js"></script>
 </head>
 <body ng-controller="mainCtrl" ng-cloak>
-{{work}}
+<div class="container">
+
+    <h1>Pagination</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <cns-pagination ng-model="currentPage" total-pages="23" bootstrap-class="pagination-sm"></cns-pagination>
+            <cns-pagination ng-model="currentPage" total-pages="23"></cns-pagination>
+            <cns-pagination ng-model="currentPage" total-pages="23" bootstrap-class="pagination-lg"></cns-pagination>
+            <pre class="prettyprint">
+
+            &lt;cns-pagination ng-model="currentPage" total-pages="23"
+                            no-first no-prev no-next no-last
+                            first-text="&laquo;" prev-text="&lt;" next-text="&gt;" last-text="&raquo;"
+                            bootstrap-class="pagination-sm">&lt;/cns-pagination>
+            </pre>
+        </div>
+        <div class="col-lg-4">
+            <h4>Settings</h4>
+            <p><span class="label label-success">ng-model</span>: Current page number.</p>
+            <p><span class="label label-success">total-pages</span>: Total pages.</p>
+            <h4>Optional</h4>
+            <p><span class="label label-default">no-first</span> Hide <i>First</i> button</p>
+            <p><span class="label label-default">no-last</span> Hide <i>Last</i> button</p>
+            <p><span class="label label-default">no-prev</span> Hide <i>Previous</i> button</p>
+            <p><span class="label label-default">no-next</span> Hide <i>Next</i> button</p>
+            <p><span class="label label-default">first-text</span> <i>(Default: &amp;laquo;)</i> Text for <i>First</i> button</p>
+            <p><span class="label label-default">last-text</span> <i>(Default: &amp;raquo;)</i> Text for <i>Last</i> button</p>
+            <p><span class="label label-default">prev-text</span> <i>(Default: &amp;lt;)</i> Text for <i>Previous</i> button</p>
+            <p><span class="label label-default">next-text</span> <i>(Default: &amp;gt;)</i> Text for <i>Next</i> button</p>
+            <p><span class="label label-default">bootstrap-class</span> <i>(Default: null)</i> Bootstrap class: <i>pagination-lg, pagination-sm</i>.</p>
+        </div>
+    </div>
+
+    <h1>Pager</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <cns-pager ng-model="currentPage" total-pages="23"
+                prev-text="Previous" next-text="Next"
+                prev-icon="-" next-icon="+" no-icon></cns-pager>
+            <cns-pager ng-model="currentPage" total-pages="23" rotate aligned
+                    prev-text="Older", next-text="Newer"></cns-pager>
+            <pre class="prettyprint">
+
+            &lt;cns-pager ng-model="currentPage" total-pages="23"
+                       rotate aligned
+                       prev-text="Previous" next-text="Next"
+                       prev-icon="&lt;" next-icon="&gt;" no-icon>&lt;/cns-pager>
+            </pre>
+        </div>
+        <div class="col-lg-4">
+            <h4>Settings</h4>
+            <p><span class="label label-success">ng-model</span>: Current page number.</p>
+            <p><span class="label label-success">total-pages</span>: Total number of items.</p>
+            <h4>Optional</h4>
+            <p><span class="label label-default">aligned</span> Hide <i>First</i> button</p>
+            <p><span class="label label-default">rotate</span> Hide <i>Last</i> button</p>
+            <p><span class="label label-default">no-icon</span> <i>(Default: false)</i> Hide icon</p>
+            <p><span class="label label-default">prev-text</span> <i>(Default: Previous)</i> Text for <i>Previous</i> button</p>
+            <p><span class="label label-default">next-text</span> <i>(Default: Next)</i> Text for <i>Next</i> button</p>
+            <p><span class="label label-default">prev-icon</span> <i>(Default: \u2190)</i> Label for <i>Previous</i> icon</p>
+            <p><span class="label label-default">next-icon</span> <i>(Default: \u2192)</i> Label for <i>Next</i> icon</p>
+        </div>
+    </div>
+
+    <h1>Rating</h1>
+    <div class="row">
+        <div class="col-lg-8">
+            <cns-rating ng-model="rating" rating="4.0">Rating: 4.0. My rating: {{rating}}.</cns-rating>
+            <pre class="prettyprint">
+
+            &lt;cns-rating ng-model="rating" rating="4.0"&gt;Rating: 4.0. My rating: {{rating}}.&lt;/cns-rating&gt;
+            </pre>
+        </div>
+        <div class="col-lg-4">
+            <h4>Settings</h4>
+            <p><span class="label label-success">ng-model</span>: User rating.</p>
+            <p><span class="label label-success">rating</span>: Current rating.</p>
+            <h4>Optional</h4>
+            <p><span class="label label-default">max</span>: <i>(Default: 5)</i> Max rating.</p>
+            <p><span class="label label-default">icon-valued</span> <i>(Default: glyphicon-star)</i> Glyphicon for valued</p>
+            <p><span class="label label-default">icon-unvalued</span> <i>(Default: glyphicon-star-empty)</i> Glyphicon for unvalued</p>
+        </div>
+    </div>
+
+</div>
 
     <script type="text/javascript" src="../src/vendor/angular/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
-    <script type="text/javascript" src="../src/scripts/directives/pagination.js"></script>
+    <script type="text/javascript" src="../src/scripts/cns.ui.bootstrap.js"></script>
+<!--    <script type="text/javascript" src="../src/scripts/directives/pagination.js"></script>
+    <script type="text/javascript" src="../src/scripts/directives/pager.js"></script>
+    <script type="text/javascript" src="../src/scripts/directives/rating.js"></script>-->
 </body>
 </html>
