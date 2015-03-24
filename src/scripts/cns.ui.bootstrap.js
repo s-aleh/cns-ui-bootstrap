@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('cns.ui.bootstrap', ['cns.ui.bootstrap.pagination', 'cns.ui.bootstrap.pager', 'cns.ui.bootstrap.rating'])
+angular.module('cns.ui.bootstrap', ['cns.ui.templates', 'cns.ui.bootstrap.pagination', 'cns.ui.bootstrap.pager', 'cns.ui.bootstrap.rating'])
     .constant('MODULE_VERSION', '0.0.1');
 
-'use strict';
+angular.module('cns.ui.templates', ['templates/directives/rating.html', 'templates/directives/pager.html', 'templates/directives/pagination.html']);
 
 angular.module('cns.ui.bootstrap.pagination', [])
     .constant('cfgPagination', {
@@ -94,7 +94,7 @@ angular.module('cns.ui.bootstrap.pagination', [])
                 ngModel: '=',
                 totalPages: '@'
             },
-            templateUrl: '../src/templates/directives/pagination.html'
+            templateUrl: 'templates/directives/pagination.html'
         };
     }]);
 
@@ -159,7 +159,7 @@ angular.module('cns.ui.bootstrap.pager', [])
                 textButton: '=',
                 textIcon: '='
             },
-            templateUrl: '../src/templates/directives/pager.html'
+            templateUrl: 'templates/directives/pager.html'
         };
     }]);
 
@@ -212,7 +212,49 @@ angular.module('cns.ui.bootstrap.rating', [])
                 ngModel: '=',
                 rating: '@'
             },
-            templateUrl: '../src/templates/directives/rating.html',
+            templateUrl: 'templates/directives/rating.html',
             transclude: true
         };
     }]);
+
+angular.module("templates/directives/pagination.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/directives/pagination.html",
+    "<nav>" +
+    "   <ul class=\"pagination\" ng-class=\"bootstrapClass\">" +
+    "       <li ng-if=\"show.first\" ng-class=\"{'disabled': ngModel == 1}\" ng-click=\"setCurPage($event, 'first')\"><a href=\"#\">{{text.first}}</a></li>" +
+    "       <li ng-if=\"show.prev\" ng-class=\"{'disabled': ngModel == 1}\" ng-click=\"setCurPage($event, 'prev')\"><a href=\"#\">{{text.prev}}</a></li>" +
+    "       <li ng-if=\"$index + 1 >= leftPages && $index + 1 <= rightPages\" ng-class=\"{'active': $index + 1 == ngModel}\" ng-click=\"setCurPage($event, $index + 1)\"" +
+    "           ng-repeat=\"page in pages track by $index | limitTo: 10\"><a href=\"#\">{{$index + 1}}</a></li>" +
+    "       <li ng-if=\"show.next\" ng-class=\"{'disabled': ngModel == totalPages}\" ng-click=\"setCurPage($event, 'next')\"><a href=\"#\">{{text.next}}</a></li>" +
+    "       <li ng-if=\"show.last\" ng-class=\"{'disabled': ngModel == totalPages}\" ng-click=\"setCurPage($event, 'last')\"><a href=\"#\">{{text.last}}</a></li>" +
+    "   </ul>" +
+    "</nav>"
+);
+}]);
+
+angular.module("templates/directives/pager.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/directives/pager.html",
+    "<nav>" +
+    "   <ul class=\"pager\">" +
+    "       <li ng-class=\"{'disabled': ngModel == 1 && !rotate, 'previous': aligned}\" ng-click=\"setCurPage($event, 'prev')\">" +
+    "           <a href=\"#\"><span ng-if=\"noIcon\" aria-hidden=\"true\">{{icon.prev}}</span> {{text.prev}}</a>" +
+    "       </li>" +
+    "       <li ng-class=\"{'disabled': ngModel == totalPages && !rotate, 'next': aligned}\" ng-click=\"setCurPage($event, 'next')\">" +
+    "           <a href=\"#\">{{text.next}} <span ng-if=\"noIcon\" aria-hidden=\"true\">{{icon.next}}</span></a>" +
+    "       </li>" +
+    "   </ul>" +
+    "</nav>"
+    );
+}]);
+
+angular.module("templates/directives/rating.html", []).run(["$templateCache", function($templateCache) {
+    $templateCache.put("templates/directives/rating.html",
+    "<span ng-mouseleave=\"mouseleave($index)\" ng-keydown=\"keydown($event)\">" +
+    "   <span ng-transclude></span>" +
+    "   <span href=\"#\" ng-repeat=\"value in values track by $index\" ng-mouseover=\"mouseenter($index)\" ng-click=\"setRating($index)\">" +
+    "       <span ng-if=\"$index + 1 <= r\" class=\"glyphicon\" ng-class=\"iconValued\" aria-hidden=\"true\"></span>" +
+    "       <span ng-if=\"$index + 1 > r\" class=\"glyphicon\" ng-class=\"iconUnvalued\" aria-hidden=\"true\"></span>" +
+    "   </span>" +
+    "</span>"
+    );
+}]);
